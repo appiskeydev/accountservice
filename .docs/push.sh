@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 export SERVICE_NAME=accountservice
+#echo $SERVICE_NAME
 ./mvnw package
 docker login -u gitlab-ci-token -p zVTStG4zXy8fseKHzD8c registry.gitlab.com
 
@@ -7,8 +8,9 @@ git add .
 git commit -m "updated via script"
 git push origin master
 
-export VERSION=${git rev-parse --short HEAD}
-echo  $VERSION
+export VERSION=$(git rev-parse --short HEAD)
+
+#echo  $VERSION
 
 docker build -t registry.gitlab.com/resourceallocationsystem/$SERVICE_NAME:$VERSION .
 docker push registry.gitlab.com/resourceallocationsystem/$SERVICE_NAME:$VERSION
